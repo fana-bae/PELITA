@@ -350,10 +350,6 @@ function AuthClientInner() {
             <span className={styles.overlayLogoText}>Pelita</span>
           </div>
 
-          <div className={styles.overlayNisBadge}>
-            <span>🪪</span> ID Card Pondok
-          </div>
-
           {!showRegister ? (
             <>
               <h2 className={styles.overlayHeading}>Halo, Santri! 👋</h2>

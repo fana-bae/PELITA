@@ -162,7 +162,7 @@ export default function MoneyClient({ financeOverview, transactions, userId }) {
   }
 
   const balance = financeOverview.totalBalance
-  const balanceColor = balance >= 0 ? 'var(--color-income)' : 'var(--color-expense)'
+  const balanceColor = balance >= 0 ? '#34D399' : '#F87171' // Bright green/red for dark background
 
   return (
     <div className={`${styles.page} page-enter`}>

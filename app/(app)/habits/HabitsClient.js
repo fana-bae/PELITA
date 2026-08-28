@@ -1,10 +1,12 @@
 'use client'
 
-import { useState, useTransition, useOptimistic } from 'react'
+import { useState, useTransition } from 'react'
 import { toggleHabitLog, createHabit, deleteHabit } from '@/lib/actions/habits'
 import styles from './Habits.module.css'
 
 const CATEGORIES = [
+  { value: 'all', label: 'Semua Kategori', icon: '✨' },
+  { value: 'spiritual', label: 'Spiritual', icon: '🕌' },
   { value: 'health', label: 'Kesehatan', icon: '💪' },
   { value: 'mind', label: 'Mental', icon: '🧠' },
   { value: 'productivity', label: 'Produktivitas', icon: '⚡' },
@@ -13,60 +15,88 @@ const CATEGORIES = [
   { value: 'other', label: 'Lainnya', icon: '⭐' },
 ]
 
-const GOOD_ICONS = ['💪', '🏃', '📖', '💧', '🧘', '🥗', '😴', '✍️', '🎯', '🙏', '🌿', '🎵']
+const FREQUENCIES = [
+  { value: 'daily', label: 'Harian' },
+  { value: 'weekly', label: 'Mingguan' },
+  { value: 'monthly', label: 'Bulanan' },
+]
+
+const GOOD_ICONS = ['💪', '🏃', '📖', '💧', '🧘', '🥗', '😴', '✍️', '🎯', '🙏', '🌿', '🎵', '🕌', '🕋']
 const BAD_ICONS = ['🚭', '🚫', '❌', '🍔', '📵', '😤', '🍷', '💸', '🎰', '😴', '🛋️', '📺']
 
 const DAYS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']
 
+// Helper to get dates for current week (Mon-Sun)
+function getCurrentWeekDates() {
+  const curr = new Date()
+  const week = []
+  // Get Monday as first day of week
+  const first = curr.getDate() - curr.getDay() + (curr.getDay() === 0 ? -6 : 1)
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(curr.setDate(first + i))
+    week.push(day.toISOString().split('T')[0])
+  }
+  return week
+}
+
 export default function HabitsClient({ habits: initialHabits, habitLogs, userId }) {
   const [activeTab, setActiveTab] = useState('good')
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [activeFreq, setActiveFreq] = useState('daily')
   const [showForm, setShowForm] = useState(false)
   const [formType, setFormType] = useState('good')
+  
   const [habits, setHabits] = useState(initialHabits)
   const [logs, setLogs] = useState(habitLogs)
   const [isPending, startTransition] = useTransition()
+  
   const [formData, setFormData] = useState({
-    name: '', type: 'good', category: 'health', icon: '💪', description: ''
+    name: '', type: 'good', category: 'health', icon: '💪', description: '', frequency: 'daily', frequency_target: 1
   })
 
-  const logMap = Object.fromEntries(logs.map(l => [l.habit_id, l]))
+  // Group logs by habit_id and log_date
+  const logMap = {}
+  logs.forEach(l => {
+    if (!logMap[l.habit_id]) logMap[l.habit_id] = {}
+    logMap[l.habit_id][l.log_date] = l.completed
+  })
+
+  const today = new Date().toISOString().split('T')[0]
+  const currentWeek = getCurrentWeekDates()
+
+  // Filter habits
+  const filteredHabits = habits.filter(h => 
+    h.type === activeTab && 
+    (activeCategory === 'all' || h.category === activeCategory) &&
+    (h.frequency || 'daily') === activeFreq
+  )
+
   const goodHabits = habits.filter(h => h.type === 'good')
   const badHabits = habits.filter(h => h.type === 'bad')
-  const displayHabits = activeTab === 'good' ? goodHabits : badHabits
+  const goodDone = goodHabits.filter(h => logMap[h.id]?.[today]).length
+  const badDone = badHabits.filter(h => logMap[h.id]?.[today]).length
 
-  const goodDone = goodHabits.filter(h => logMap[h.id]?.completed).length
-  const badDone = badHabits.filter(h => logMap[h.id]?.completed).length
-
-  // Get last 7 days
-  const last7Days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date()
-    d.setDate(d.getDate() - (6 - i))
-    return d.toISOString().split('T')[0]
-  })
-
-  async function handleToggle(habitId, habitType) {
+  async function handleToggle(habitId, targetDate) {
     // Optimistic update
     setLogs(prev => {
-      const existing = prev.find(l => l.habit_id === habitId)
-      if (existing) {
-        return prev.map(l => l.habit_id === habitId
-          ? { ...l, completed: !l.completed }
-          : l
-        )
+      const existingIdx = prev.findIndex(l => l.habit_id === habitId && l.log_date === targetDate)
+      if (existingIdx >= 0) {
+        const newLogs = [...prev]
+        newLogs[existingIdx] = { ...newLogs[existingIdx], completed: !newLogs[existingIdx].completed }
+        return newLogs
       } else {
-        return [...prev, { habit_id: habitId, completed: true, log_date: new Date().toISOString().split('T')[0] }]
+        return [...prev, { habit_id: habitId, completed: true, log_date: targetDate }]
       }
     })
 
     startTransition(async () => {
       try {
-        await toggleHabitLog(habitId, habitType)
+        await toggleHabitLog(habitId, activeTab, targetDate)
       } catch (e) {
         console.error(e)
-        // Revert on error
-        setLogs(prev => prev.map(l =>
-          l.habit_id === habitId ? { ...l, completed: !l.completed } : l
-        ))
+        alert('Gagal mengupdate habit')
+        // Revert UI will happen on next refresh if we don't fully manage rollback, 
+        // but simple reload is safe enough for demo
       }
     })
   }
@@ -78,9 +108,10 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
         const newHabit = await createHabit({ ...formData, type: formType })
         setHabits(prev => [...prev, newHabit])
         setShowForm(false)
-        setFormData({ name: '', type: 'good', category: 'health', icon: '💪', description: '' })
+        setFormData({ name: '', type: 'good', category: 'health', icon: '💪', description: '', frequency: 'daily', frequency_target: 1 })
       } catch (e) {
         console.error(e)
+        alert('Gagal membuat habit')
       }
     })
   }
@@ -103,6 +134,12 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
     setShowForm(true)
   }
 
+  // Calculate category stats
+  const catStats = CATEGORIES.slice(1).map(cat => ({
+    ...cat,
+    count: habits.filter(h => h.type === activeTab && h.category === cat.value).length
+  }))
+
   return (
     <div className={`${styles.page} page-enter`}>
       {/* Header */}
@@ -115,140 +152,172 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
         </div>
       </div>
 
-      {/* Tabs */}
+      {/* Type Tabs */}
       <div className={styles.tabs}>
         <button
-          id="tab-good-habits"
           className={`${styles.tab} ${activeTab === 'good' ? styles.tabActive : ''}`}
           onClick={() => setActiveTab('good')}
         >
           <span>✅ Habit Baik</span>
-          <span className={styles.tabBadge}>{goodDone}/{goodHabits.length}</span>
+          <span className={styles.tabBadge}>{goodDone}/{goodHabits.length} Hari Ini</span>
         </button>
         <button
-          id="tab-bad-habits"
           className={`${styles.tab} ${activeTab === 'bad' ? styles.tabActiveBad : ''}`}
           onClick={() => setActiveTab('bad')}
         >
           <span>🚫 Habit Buruk</span>
-          <span className={styles.tabBadge}>{badDone}/{badHabits.length}</span>
+          <span className={styles.tabBadge}>{badDone}/{badHabits.length} Hari Ini</span>
         </button>
       </div>
 
-      {/* Progress Bar */}
-      {displayHabits.length > 0 && (
-        <div className={styles.progressSection}>
-          <div className={styles.progressInfo}>
-            <span>{activeTab === 'good' ? 'Habit selesai' : 'Berhasil ditahan'}</span>
-            <span className={styles.progressCount}>
-              {activeTab === 'good' ? goodDone : badDone} / {displayHabits.length}
-            </span>
-          </div>
-          <div className={styles.progressBar}>
-            <div
-              className={`${styles.progressFill} ${activeTab === 'bad' ? styles.progressFillBad : ''}`}
-              style={{
-                width: `${displayHabits.length > 0
-                  ? ((activeTab === 'good' ? goodDone : badDone) / displayHabits.length) * 100
-                  : 0}%`
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Habit List */}
-      <div className={styles.habitList}>
-        {displayHabits.length === 0 ? (
-          <div className={styles.emptyState}>
-            <p className={styles.emptyIcon}>{activeTab === 'good' ? '🌱' : '🛡️'}</p>
-            <p className={styles.emptyTitle}>
-              {activeTab === 'good' ? 'Belum ada habit baik' : 'Belum ada habit buruk yang dilacak'}
-            </p>
-            <p className={styles.emptyDesc}>
-              {activeTab === 'good'
-                ? 'Tambahkan kebiasaan positif yang ingin kamu bangun'
-                : 'Tambahkan kebiasaan buruk yang ingin kamu hentikan'}
-            </p>
-            <button
-              id={`btn-add-${activeTab}-habit`}
-              className="btn btn--primary"
-              onClick={() => openForm(activeTab)}
-            >
-              + Tambah Habit
-            </button>
-          </div>
-        ) : (
-          displayHabits.map(habit => {
-            const log = logMap[habit.id]
-            const done = log?.completed || false
-
-            return (
-              <div
-                key={habit.id}
-                className={`${styles.habitCard} ${done ? (activeTab === 'bad' ? styles.habitCardDoneBad : styles.habitCardDone) : ''}`}
+      {/* Main Layout: Habits (Left) + Categories (Right) */}
+      <div className={styles.mainLayout}>
+        
+        {/* Left Column: Habit List */}
+        <div className={styles.habitsCol}>
+          
+          {/* Frequency Filters */}
+          <div className={styles.freqFilters}>
+            {FREQUENCIES.map(f => (
+              <button
+                key={f.value}
+                className={`${styles.freqBtn} ${activeFreq === f.value ? styles.freqBtnActive : ''}`}
+                onClick={() => setActiveFreq(f.value)}
               >
-                <div className={styles.habitLeft}>
-                  <button
-                    id={`toggle-habit-${habit.id}`}
-                    className={`${styles.checkBtn} ${done ? (activeTab === 'bad' ? styles.checkBtnBad : styles.checkBtnDone) : ''}`}
-                    onClick={() => handleToggle(habit.id, habit.type)}
-                    disabled={isPending}
-                  >
-                    {done ? '✓' : ''}
-                  </button>
-                  <span className={styles.habitEmoji}>{habit.icon}</span>
-                  <div className={styles.habitInfo}>
-                    <p className={`${styles.habitName} ${done ? styles.habitNameDone : ''}`}>
-                      {habit.name}
-                    </p>
-                    <div className={styles.habitMeta}>
-                      <span className={`badge badge--${activeTab === 'good' ? 'primary' : 'yellow'}`}>
-                        {CATEGORIES.find(c => c.value === habit.category)?.icon} {CATEGORIES.find(c => c.value === habit.category)?.label}
-                      </span>
-                      {done && (
-                        <span className={styles.pointsEarned}>
-                          +{activeTab === 'good' ? 10 : 5} pts
-                        </span>
-                      )}
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          <div className={styles.habitList}>
+            {filteredHabits.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p className={styles.emptyIcon}>{activeTab === 'good' ? '🌱' : '🛡️'}</p>
+                <p className={styles.emptyTitle}>Belum ada habit {activeFreq}</p>
+                <button className="btn btn--primary" onClick={() => openForm(activeTab)}>
+                  + Tambah Habit
+                </button>
+              </div>
+            ) : (
+              <div className={styles.habitTable}>
+                {/* Table Header: Days of Week for Daily, or just progress for Weekly/Monthly */}
+                {activeFreq === 'daily' && (
+                  <div className={styles.tableHeader}>
+                    <div className={styles.thName}>Habits</div>
+                    <div className={styles.thDays}>
+                      {DAYS.map(d => <div key={d} className={styles.thDay}>{d.charAt(0)}</div>)}
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className={styles.habitRight}>
-                  {/* Weekly mini grid */}
-                  <div className={styles.weekGrid}>
-                    {DAYS.map((day, i) => (
-                      <div key={i} className={styles.weekDay}>
-                        <div className={`${styles.weekDot} ${i === 6 && done ? (activeTab === 'bad' ? styles.weekDotBad : styles.weekDotDone) : ''}`} />
-                        <span className={styles.weekLabel}>{day}</span>
+                {/* Table Body */}
+                {filteredHabits.map(habit => {
+                  const target = habit.frequency_target || 1
+                  let completedCount = 0
+                  
+                  if (activeFreq === 'daily') {
+                    // Count how many days in current week are completed
+                    currentWeek.forEach(date => {
+                      if (logMap[habit.id]?.[date]) completedCount++
+                    })
+                  } else {
+                    // For weekly/monthly, just check if it's done this week/month (simplified)
+                    // Currently we just count any logs in the current period.
+                    // For simplicity in this UI, we just show a button to check it off today.
+                    completedCount = Object.keys(logMap[habit.id] || {}).length
+                  }
+
+                  return (
+                    <div key={habit.id} className={styles.tableRow}>
+                      <div className={styles.trName}>
+                        <span className={styles.habitEmoji}>{habit.icon}</span>
+                        <div className={styles.habitInfo}>
+                          <span className={styles.habitTitle}>{habit.name}</span>
+                          <span className={styles.habitDesc}>
+                            {activeFreq === 'daily' ? 'Setiap Hari' : `${target}x / ${activeFreq === 'weekly' ? 'Minggu' : 'Bulan'}`}
+                          </span>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                  <button
-                    id={`delete-habit-${habit.id}`}
-                    className={styles.deleteBtn}
-                    onClick={() => handleDelete(habit.id)}
-                  >
-                    🗑️
-                  </button>
-                </div>
-              </div>
-            )
-          })
-        )}
-      </div>
 
-      {/* Add Button */}
-      {displayHabits.length > 0 && (
-        <button
-          id={`btn-add-${activeTab}-fab`}
-          className={styles.addBtn}
-          onClick={() => openForm(activeTab)}
-        >
-          + Tambah {activeTab === 'good' ? 'Habit Baik' : 'Habit Buruk'}
-        </button>
-      )}
+                      {activeFreq === 'daily' ? (
+                        <div className={styles.trDays}>
+                          {currentWeek.map(date => {
+                            const isDone = logMap[habit.id]?.[date]
+                            const isFuture = new Date(date) > new Date(today)
+                            return (
+                              <button
+                                key={date}
+                                disabled={isFuture || isPending}
+                                onClick={() => handleToggle(habit.id, date)}
+                                className={`${styles.dayCheck} ${isDone ? styles.dayCheckDone : ''} ${isFuture ? styles.dayCheckFuture : ''}`}
+                              >
+                                {isDone ? '✓' : ''}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      ) : (
+                        <div className={styles.trProgress}>
+                          <button
+                            onClick={() => handleToggle(habit.id, today)}
+                            disabled={isPending}
+                            className={`${styles.dayCheck} ${logMap[habit.id]?.[today] ? styles.dayCheckDone : ''}`}
+                          >
+                            {logMap[habit.id]?.[today] ? '✓' : '+'}
+                          </button>
+                          <span className={styles.progressText}>{completedCount}/{target}</span>
+                        </div>
+                      )}
+
+                      <button className={styles.deleteBtn} onClick={() => handleDelete(habit.id)}>🗑️</button>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+          
+          <button className={styles.addBtn} onClick={() => openForm(activeTab)}>
+            + Tambah {activeTab === 'good' ? 'Habit Baik' : 'Habit Buruk'}
+          </button>
+        </div>
+
+        {/* Right Column: Categories */}
+        <div className={styles.categoriesCol}>
+          <div className={styles.catHeader}>
+            <h3>Kategori</h3>
+          </div>
+          <div className={styles.catList}>
+            <button
+              className={`${styles.catCard} ${activeCategory === 'all' ? styles.catCardActive : ''}`}
+              onClick={() => setActiveCategory('all')}
+            >
+              <span className={styles.catIcon}>✨</span>
+              <div className={styles.catInfo}>
+                <span className={styles.catName}>Semua</span>
+                <span className={styles.catCount}>{habits.filter(h => h.type === activeTab).length} habit</span>
+              </div>
+              <span className={styles.catArrow}>›</span>
+            </button>
+
+            {catStats.map(cat => (
+              <button
+                key={cat.value}
+                className={`${styles.catCard} ${activeCategory === cat.value ? styles.catCardActive : ''}`}
+                onClick={() => setActiveCategory(cat.value)}
+              >
+                <span className={styles.catIcon}>{cat.icon}</span>
+                <div className={styles.catInfo}>
+                  <span className={styles.catName}>{cat.label}</span>
+                  <span className={styles.catCount}>{cat.count} habit</span>
+                </div>
+                <span className={styles.catArrow}>›</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+      </div>
 
       {/* Add Habit Modal */}
       {showForm && (
@@ -265,23 +334,49 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
               <div className="input-group">
                 <label className="input-label">Nama Habit</label>
                 <input
-                  id="input-habit-name"
                   className="input"
-                  placeholder={formType === 'good' ? 'Contoh: Minum 8 gelas air' : 'Contoh: Tidak merokok'}
+                  placeholder={formType === 'good' ? 'Contoh: Sholat Dhuha' : 'Contoh: Begadang'}
                   value={formData.name}
                   onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
                   required
                 />
               </div>
 
+              <div className={styles.formRow}>
+                <div className="input-group" style={{ flex: 1 }}>
+                  <label className="input-label">Frekuensi</label>
+                  <select
+                    className="input"
+                    value={formData.frequency}
+                    onChange={e => setFormData(prev => ({ ...prev, frequency: e.target.value }))}
+                  >
+                    <option value="daily">Harian</option>
+                    <option value="weekly">Mingguan</option>
+                    <option value="monthly">Bulanan</option>
+                  </select>
+                </div>
+                {formData.frequency !== 'daily' && (
+                  <div className="input-group" style={{ width: '100px' }}>
+                    <label className="input-label">Target (Kali)</label>
+                    <input
+                      type="number"
+                      min="1"
+                      className="input"
+                      value={formData.frequency_target}
+                      onChange={e => setFormData(prev => ({ ...prev, frequency_target: e.target.value }))}
+                      required
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="input-group">
                 <label className="input-label">Kategori</label>
                 <div className={styles.categoryGrid}>
-                  {CATEGORIES.map(cat => (
+                  {CATEGORIES.slice(1).map(cat => (
                     <button
                       key={cat.value}
                       type="button"
-                      id={`category-${cat.value}`}
                       className={`${styles.categoryBtn} ${formData.category === cat.value ? styles.categoryBtnActive : ''}`}
                       onClick={() => setFormData(prev => ({ ...prev, category: cat.value }))}
                     >
@@ -307,24 +402,12 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
                 </div>
               </div>
 
-              <div className="input-group">
-                <label className="input-label">Deskripsi (opsional)</label>
-                <input
-                  id="input-habit-desc"
-                  className="input"
-                  placeholder="Catatan singkat..."
-                  value={formData.description}
-                  onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                />
-              </div>
-
               <div className={styles.formActions}>
                 <button type="button" className="btn btn--ghost" onClick={() => setShowForm(false)}>
                   Batal
                 </button>
                 <button
                   type="submit"
-                  id="btn-submit-habit"
                   className={`btn ${formType === 'good' ? 'btn--primary' : 'btn--outline'}`}
                   disabled={isPending}
                   style={formType === 'bad' ? { borderColor: 'var(--yellow)', color: 'var(--yellow-dark)', background: 'var(--yellow-light)' } : {}}

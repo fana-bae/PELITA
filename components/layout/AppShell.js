@@ -156,24 +156,7 @@ export default function AppShell({ user, profile, children }) {
         </div>
       </main>
 
-      {/* ── Bottom Nav — Mobile ── */}
-      <nav className={styles.bottomNav}>
-        {NAV_ITEMS.map(item => {
-          const active = pathname === item.href
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              id={`bottom-${item.id}`}
-              className={`${styles.bottomNavItem} ${active ? styles.bottomNavItemActive : ''}`}
-            >
-              {active && <span className={styles.bottomNavPill} />}
-              <span className={styles.bottomNavIcon}>{item.icon}</span>
-              <span className={styles.bottomNavLabel}>{item.label}</span>
-            </Link>
-          )
-        })}
-      </nav>
+      {/* ── Removed Bottom Nav (Using Hamburger Menu Instead) ── */}
 
       <StreakModal />
     </div>
