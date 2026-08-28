@@ -2,15 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/morning-reminder",
-      "schedule": "0 1 * * *"
-    },
-    {
-      "path": "/api/cron/evening-reminder",
-      "schedule": "0 13 * * *"
-    },
-    {
-      "path": "/api/cron/task-reminder",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
