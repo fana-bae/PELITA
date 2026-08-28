@@ -55,7 +55,7 @@ export default function AppShell({ user, profile, children }) {
           </div>
 
           {/* Profile Card */}
-          <Link href="/settings" className={styles.profileCard} onClick={() => setSidebarOpen(false)}>
+          <Link href="/settings" prefetch={true} className={styles.profileCard} onClick={() => setSidebarOpen(false)}>
             <div className={styles.avatar}>
               {profile?.avatar_url ? (
                 <img src={profile.avatar_url} alt={displayName} />
@@ -79,6 +79,7 @@ export default function AppShell({ user, profile, children }) {
                   key={item.href}
                   href={item.href}
                   id={item.id}
+                  prefetch={true}
                   className={`${styles.navItem} ${active ? styles.navItemActive : ''}`}
                   onClick={() => setSidebarOpen(false)}
                 >
@@ -96,6 +97,7 @@ export default function AppShell({ user, profile, children }) {
             <Link
               href="/settings"
               id="nav-settings"
+              prefetch={true}
               className={`${styles.navItem} ${pathname === '/settings' ? styles.navItemActive : ''}`}
               onClick={() => setSidebarOpen(false)}
             >
