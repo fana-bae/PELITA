@@ -5,13 +5,7 @@ import { formatCurrency } from '@/lib/utils/money-calc'
 import { getUserBadge } from '@/lib/utils/points'
 import styles from './Dashboard.module.css'
 
-const QUOTES = [
-  "Kamu adalah hasil dari apa yang kamu lakukan berulang kali. — Aristotle",
-  "Langkah kecil setiap hari membawa perubahan besar.",
-  "Konsistensi adalah kunci keberhasilan jangka panjang.",
-  "Mulai dari mana kamu berada, gunakan apa yang kamu punya.",
-  "Kemajuan, bukan kesempurnaan.",
-]
+
 
 const PRIORITY_COLOR = { high: '#FF5B5B', medium: '#FFC537', low: '#0AC682' }
 
@@ -31,7 +25,7 @@ export default function DashboardClient({
   const hour = now.getHours()
   const greeting = hour < 12 ? 'Selamat Pagi' : hour < 17 ? 'Selamat Siang' : 'Selamat Malam'
 
-  const quote = QUOTES[now.getDay() % QUOTES.length]
+
   const badge = getUserBadge(profile?.total_points || 0)
 
   const habitProgress = totalHabits > 0 ? Math.round((completedHabits / totalHabits) * 100) : 0
@@ -215,11 +209,7 @@ export default function DashboardClient({
         )}
       </section>
 
-      {/* Quote */}
-      <div className={styles.quoteCard}>
-        <span className={styles.quoteIcon}>💭</span>
-        <p className={styles.quoteText}>{quote}</p>
-      </div>
+
     </div>
   )
 }
