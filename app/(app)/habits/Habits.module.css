@@ -27,7 +27,7 @@
 .tabs {
   display: flex;
   gap: 8px;
-  background: var(--white);
+  background: var(--surface);
   padding: 6px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
@@ -48,7 +48,7 @@
 }
 
 .tab:hover {
-  background: var(--bg-2);
+  background: var(--surface-2);
 }
 
 .tabActive {
@@ -113,7 +113,7 @@
 }
 
 .habitCard {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-lg);
   padding: 16px;
   display: flex;
@@ -152,7 +152,7 @@
   height: 28px;
   border-radius: 8px;
   border: 2px solid var(--border);
-  background: var(--white);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,7 +276,7 @@
 .emptyState {
   text-align: center;
   padding: 48px 24px;
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-xl);
   border: 2px dashed var(--border);
   display: flex;

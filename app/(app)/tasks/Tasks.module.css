@@ -39,7 +39,7 @@
 /* ── Kolom Utama: Kalender (Kiri) ─────────────────────── */
 .colMain {
   flex: 1;
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
@@ -66,7 +66,7 @@
 }
 
 .navBtn {
-  background: var(--bg-2);
+  background: var(--surface-2);
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -81,7 +81,7 @@
 .navBtn:hover { background: var(--border); color: var(--dark); }
 
 .navToday {
-  background: var(--bg-2);
+  background: var(--surface-2);
   border: none;
   border-radius: 8px;
   padding: 6px 12px;
@@ -101,7 +101,7 @@
 
 .calViewSwitcher {
   display: flex;
-  background: var(--bg-2);
+  background: var(--surface-2);
   border-radius: 8px;
   padding: 4px;
 }
@@ -119,7 +119,7 @@
 }
 
 .viewBtn.active {
-  background: var(--white);
+  background: var(--surface);
   color: var(--dark);
   box-shadow: var(--shadow-sm);
 }
@@ -152,7 +152,7 @@
 .monthHeaderRow {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background: var(--white);
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
 
@@ -175,7 +175,7 @@
 }
 
 .monthDayCell {
-  background: var(--white);
+  background: var(--surface);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 8px;
@@ -184,7 +184,7 @@
   gap: 4px;
 }
 .monthDayCell:nth-child(7n) { border-right: none; }
-.monthDayCell.otherMonth { background: var(--bg-2); opacity: 0.5; }
+.monthDayCell.otherMonth { background: var(--surface-2); opacity: 0.5; }
 
 .monthDayNum {
   font-size: 0.875rem;
@@ -201,7 +201,7 @@
 
 .monthDayToday .monthDayNum {
   background: var(--blue);
-  color: var(--white);
+  color: var(--surface);
 }
 
 .monthTaskList {
@@ -217,7 +217,7 @@
   display: flex;
   min-height: 1200px; /* enough space for 24 hours */
   position: relative;
-  background: var(--white);
+  background: var(--surface);
 }
 
 .timeAxis {
@@ -254,7 +254,7 @@
 .dayHeader {
   position: sticky;
   top: 0;
-  background: var(--white);
+  background: var(--surface);
   z-index: 20;
   padding: 12px 8px;
   text-align: center;
@@ -287,7 +287,7 @@
 }
 .isToday .dayHeaderNum {
   background: var(--blue);
-  color: var(--white);
+  color: var(--surface);
 }
 
 /* All-day tasks section at the top of Week/Day view */
@@ -342,7 +342,7 @@
 .taskBlock {
   border-radius: 6px;
   padding: 4px 8px;
-  color: var(--white);
+  color: var(--surface);
   font-size: 0.7rem;
   font-weight: 600;
   cursor: pointer;
@@ -389,7 +389,7 @@
 }
 
 .sideWidget {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-xl);
   padding: 20px;
   border: 1px solid var(--border);
@@ -413,7 +413,7 @@
 }
 
 .widgetBadge {
-  background: var(--bg-2);
+  background: var(--surface-2);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 10px;
@@ -448,7 +448,7 @@
   border: 1px solid transparent;
 }
 .sideTaskItem:hover {
-  background: var(--white);
+  background: var(--surface);
   border-color: var(--border);
 }
 
@@ -457,7 +457,7 @@
   height: 22px;
   border-radius: 50%;
   border: 2px solid var(--border);
-  background: var(--white);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -470,7 +470,7 @@
 .checkCircleDone {
   background: var(--green);
   border-color: var(--green);
-  color: var(--white);
+  color: var(--surface);
 }
 
 .sideTaskInfo {

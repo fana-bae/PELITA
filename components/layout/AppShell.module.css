@@ -1,58 +1,59 @@
 /* ============================================================
-   AppShell Layout CSS Module
+   AppShell — Modern Soft Elegant Layout
+   Light + Dark Mode, Responsive (Mobile / Tablet / Desktop)
    ============================================================ */
 
-/* Shell Container */
+/* ── Shell Container ── */
 .shell {
   display: flex;
   min-height: 100vh;
   background: var(--bg);
   position: relative;
+  transition: background-color var(--transition-theme);
 }
 
 /* ============================================================
-   Sidebar (Desktop)
+   Sidebar
    ============================================================ */
 .sidebar {
   width: var(--sidebar-width);
-  background: var(--white);
+  background: var(--surface);
   border-right: 1px solid var(--border);
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 200;
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition-slow), background-color var(--transition-theme),
+              border-color var(--transition-theme);
   box-shadow: var(--shadow-lg);
 }
 
-.sidebarOpen {
-  transform: translateX(0);
-}
+.sidebarOpen { transform: translateX(0); }
 
 .sidebarInner {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px 16px;
+  padding: 20px 12px;
   overflow-y: auto;
 }
 
-/* Logo */
+/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 8px 24px;
+  padding: 4px 8px 20px;
+  margin-bottom: 16px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 20px;
 }
 
 .logoIcon {
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   animation: float 3s ease-in-out infinite;
 }
 
@@ -64,22 +65,31 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: -0.3px;
 }
 
-/* Profile Card */
+/* ── Profile Card ── */
 .profileCard {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: var(--primary-light);
-  border-radius: var(--radius-md);
-  margin-bottom: 20px;
+  gap: 10px;
+  padding: 10px 10px;
+  background: var(--bg-2);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  transition: background var(--transition-fast), border-color var(--transition-theme);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.profileCard:hover {
+  background: var(--bg-3);
 }
 
 .avatar {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, var(--primary), var(--blue));
   display: flex;
@@ -87,9 +97,10 @@
   justify-content: center;
   color: white;
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1rem;
   overflow: hidden;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .avatar img {
@@ -105,38 +116,48 @@
 
 .profileName {
   font-weight: 700;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--dark);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .profilePoints {
-  font-size: 0.75rem;
-  color: var(--primary-dark);
-  font-weight: 600;
+  font-size: 0.6875rem;
+  color: var(--dark-3);
+  font-weight: 500;
+  margin-top: 2px;
 }
 
-/* Navigation */
+.profileArrow {
+  color: var(--dark-3);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ── Navigation ── */
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   flex: 1;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
+  gap: 10px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
   transition: all var(--transition-normal);
   position: relative;
   color: var(--dark-2);
   font-weight: 500;
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
+  text-decoration: none;
 }
 
 .navItem:hover {
@@ -147,19 +168,17 @@
 .navItemActive {
   background: var(--primary-light);
   color: var(--primary-dark);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .navIcon {
-  font-size: 1.125rem;
-  width: 24px;
+  font-size: 1.0625rem;
+  width: 22px;
   text-align: center;
   flex-shrink: 0;
 }
 
-.navLabel {
-  flex: 1;
-}
+.navLabel { flex: 1; }
 
 .navIndicator {
   width: 6px;
@@ -169,32 +188,63 @@
   flex-shrink: 0;
 }
 
-/* Sidebar Footer */
+/* ── Sidebar Footer ── */
 .sidebarFooter {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 12px;
   border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
+/* ── Theme Toggle ── */
+.themeToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  color: var(--dark-2);
+  font-weight: 500;
+  font-size: 0.9rem;
+  width: 100%;
+  text-align: left;
+  transition: all var(--transition-normal);
+}
+
+.themeToggle:hover {
+  background: var(--bg-2);
+  color: var(--dark);
+}
+
+.themeToggleIcon { font-size: 1rem; width: 22px; text-align: center; }
+
+.themeToggleCompact {
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+}
+
+/* ── Logout Button ── */
 .logoutBtn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
+  gap: 10px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
   color: var(--danger);
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   font-weight: 500;
   width: 100%;
   transition: background var(--transition-fast);
 }
 
-.logoutBtn:hover {
-  background: var(--danger-light);
-}
+.logoutBtn:hover { background: var(--danger-light); }
 
 /* ============================================================
    Overlay (Mobile)
@@ -202,9 +252,10 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 99;
-  backdrop-filter: blur(2px);
+  background: rgba(0,0,0,0.4);
+  z-index: 199;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease;
 }
 
 /* ============================================================
@@ -218,35 +269,46 @@
   margin-left: 0;
 }
 
+/* ── Top Bar (Mobile/Tablet) ── */
 .topBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 16px;
   height: 60px;
-  background: var(--white);
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 50;
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
 }
 
+/* Hamburger menu */
 .menuBtn {
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 8px;
   border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
 }
+
+.menuBtn:hover { background: var(--bg-2); }
 
 .menuBtn span {
   display: block;
-  width: 22px;
+  width: 20px;
   height: 2px;
   background: var(--dark);
   border-radius: 2px;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-normal);
 }
+
+/* Animated hamburger → X */
+.menuLineTop    { transform: translateY(7px) rotate(45deg); }
+.menuLineHide   { opacity: 0; transform: scaleX(0); }
+.menuLineBottom { transform: translateY(-7px) rotate(-45deg); }
 
 .topLogo {
   display: flex;
@@ -254,16 +316,22 @@
   gap: 6px;
   font-family: var(--font-outfit);
   font-weight: 800;
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   background: linear-gradient(135deg, var(--primary), var(--blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .topAvatar {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, var(--primary), var(--blue));
   display: flex;
@@ -271,19 +339,19 @@
   justify-content: center;
   color: white;
   font-weight: 700;
+  font-size: 0.875rem;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
 
-.topAvatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.topAvatar img { width: 100%; height: 100%; object-fit: cover; }
 
+/* ── Page Content ── */
 .pageContent {
   flex: 1;
-  padding: 24px 20px;
-  padding-bottom: calc(var(--bottom-nav-height) + 24px);
+  padding: 16px;
+  padding-bottom: calc(var(--bottom-nav-height) + 16px);
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -294,71 +362,88 @@
    ============================================================ */
 .bottomNav {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-around;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: var(--bottom-nav-height);
-  background: var(--white);
+  background: var(--surface);
   border-top: 1px solid var(--border);
   z-index: 90;
-  padding: 0 8px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+  padding: 0 4px env(safe-area-inset-bottom);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.06);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
 }
 
 .bottomNavItem {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2px;
-  padding: 8px 12px;
+  padding: 8px 4px;
   border-radius: var(--radius-md);
   transition: all var(--transition-normal);
   color: var(--dark-3);
   flex: 1;
-}
-
-.bottomNavItem:hover {
-  background: var(--bg-2);
+  position: relative;
+  text-decoration: none;
 }
 
 .bottomNavItemActive {
   color: var(--primary);
 }
 
-.bottomNavItemActive .bottomNavIcon {
-  animation: checkBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+/* Active pill indicator */
+.bottomNavPill {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .bottomNavIcon {
   font-size: 1.25rem;
+  margin-top: 4px;
+  transition: transform var(--transition-normal);
+}
+
+.bottomNavItemActive .bottomNavIcon {
+  transform: scale(1.15);
 }
 
 .bottomNavLabel {
-  font-size: 0.625rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 /* ============================================================
-   Responsive — Tablet (640px+)
+   Tablet (640px+)
    ============================================================ */
 @media (min-width: 640px) {
-  .topBar {
-    padding: 0 32px;
-  }
+  .topBar { padding: 0 24px; }
 
   .pageContent {
-    padding: 32px;
-    padding-bottom: calc(var(--bottom-nav-height) + 32px);
+    padding: 24px;
+    padding-bottom: calc(var(--bottom-nav-height) + 24px);
   }
+
+  .bottomNavLabel { font-size: 0.625rem; }
+  .bottomNavIcon { font-size: 1.375rem; }
+  .bottomNavItem { padding: 8px 8px; }
 }
 
 /* ============================================================
-   Responsive — Desktop (1024px+)
+   Desktop (1024px+)
    ============================================================ */
 @media (min-width: 1024px) {
   .sidebar {
@@ -366,24 +451,15 @@
     box-shadow: none;
   }
 
-  .main {
-    margin-left: var(--sidebar-width);
-  }
+  .main { margin-left: var(--sidebar-width); }
 
-  .topBar {
-    display: none; /* Hidden on desktop, sidebar is always visible */
-  }
-
-  .bottomNav {
-    display: none; /* Hidden on desktop */
-  }
+  .topBar { display: none; }
+  .bottomNav { display: none; }
 
   .pageContent {
-    padding: 40px 48px;
-    padding-bottom: 40px;
+    padding: 36px 44px;
+    padding-bottom: 36px;
   }
 
-  .overlay {
-    display: none;
-  }
+  .overlay { display: none; }
 }

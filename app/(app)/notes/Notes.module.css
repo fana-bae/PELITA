@@ -24,7 +24,7 @@
 
 /* Templates Section */
 .templatesSection {
-  background: var(--white);
+  background: var(--surface);
   padding: 20px;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
@@ -67,7 +67,7 @@
 }
 
 .templateCard:hover {
-  background: var(--white);
+  background: var(--surface);
   box-shadow: var(--shadow-sm);
   border-color: var(--blue-light);
   transform: translateY(-2px);
@@ -229,7 +229,7 @@
 .colorOption.active {
   border-color: var(--dark);
   transform: scale(1.1);
-  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--dark);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--dark);
 }
 
 @media (max-width: 480px) {

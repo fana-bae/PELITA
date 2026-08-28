@@ -1,8 +1,11 @@
-.page { display: flex; flex-direction: column; gap: 24px; }
-.title { font-size: 1.75rem; font-weight: 800; color: var(--dark); }
+/* Settings.module.css — Modern, dark-mode aware */
 
-.profileCard {
-  background: var(--white);
+.page { display: flex; flex-direction: column; gap: 20px; }
+.title { font-size: 1.5rem; font-weight: 800; color: var(--dark); }
+
+/* ── Profile Hero ── */
+.profileHero {
+  background: var(--surface);
   border-radius: var(--radius-xl);
   padding: 24px;
   display: flex;
@@ -12,61 +15,148 @@
   box-shadow: var(--shadow-sm);
 }
 
-.avatar {
-  width: 72px;
-  height: 72px;
+.avatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatarLarge {
+  width: 80px;
+  height: 80px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, var(--primary), var(--blue));
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
   overflow: hidden;
-  flex-shrink: 0;
   box-shadow: var(--shadow-primary);
+  position: relative;
 }
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-.profileName { font-size: 1.25rem; font-weight: 800; color: var(--dark); }
-.profileEmail { font-size: 0.875rem; color: var(--dark-2); margin-top: 2px; }
+.avatarLarge img { width: 100%; height: 100%; object-fit: cover; }
 
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+}
+
+.uploadSpinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.avatarEditBtn {
+  position: absolute;
+  bottom: 0;
+  right: -4px;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.avatarEditBtn:hover {
+  background: var(--surface-2);
+  transform: scale(1.1);
+}
+
+.profileHeroInfo { flex: 1; min-width: 0; }
+.profileHeroName { font-size: 1.125rem; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
+.profileHeroEmail { font-size: 0.8125rem; color: var(--dark-3); margin-bottom: 10px; }
+
+.profileBadges { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.avatarHint { font-size: 0.75rem; color: var(--dark-3); margin-top: -10px; }
+.errorMsg { font-size: 0.8125rem; color: var(--danger); font-weight: 500; background: var(--danger-light); padding: 8px 12px; border-radius: var(--radius-md); }
+
+/* ── Section Cards ── */
 .section {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  padding: 22px;
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 16px;
   box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
 }
 
 .sectionTitle {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--dark);
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
 }
 
 .form { display: flex; flex-direction: column; gap: 14px; }
 
-/* Notification Settings */
+/* ── Theme Row ── */
+.themeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.themeLabel { font-size: 0.9375rem; font-weight: 600; color: var(--dark); }
+.themeSub { font-size: 0.75rem; color: var(--dark-3); margin-top: 2px; }
+
+.themeBtn {
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.themeBtn:hover { background: var(--bg-3); }
+
+/* ── Notification ── */
 .notifPermission {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: var(--bg-2);
+  background: var(--surface-2);
   padding: 14px;
   border-radius: var(--radius-md);
+  border: 1px solid var(--border);
 }
+
 .notifPermLabel { font-size: 0.875rem; font-weight: 700; color: var(--dark); }
 .notifPermDesc { font-size: 0.75rem; color: var(--dark-2); margin-top: 4px; }
-
-.notifList { display: flex; flex-direction: column; gap: 12px; }
+.notifList { display: flex; flex-direction: column; gap: 10px; }
 
 .notifItem {
   display: flex;
@@ -76,14 +166,18 @@
   padding: 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
 }
+.notifItem:hover { background: var(--surface-2); }
 
-.notifItemLabel { font-size: 0.875rem; font-weight: 700; color: var(--dark); }
-.notifItemDesc { font-size: 0.75rem; color: var(--dark-2); margin-top: 4px; }
+.notifItemLabel { font-size: 0.875rem; font-weight: 600; color: var(--dark); }
+.notifItemDesc { font-size: 0.75rem; color: var(--dark-3); margin-top: 3px; }
 
 .dangerZone { border-color: var(--danger-light); }
 
 @media (max-width: 480px) {
-  .profileCard { flex-direction: column; text-align: center; }
+  .profileHero { flex-direction: column; text-align: center; }
+  .profileBadges { justify-content: center; }
   .notifPermission { flex-direction: column; align-items: flex-start; }
+  .themeRow { flex-direction: column; align-items: flex-start; }
 }

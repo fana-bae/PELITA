@@ -1,4 +1,5 @@
 import { Inter, Outfit } from 'next/font/google'
+import ThemeProvider from '@/components/providers/ThemeProvider'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -24,14 +25,22 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="id" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* Prevent flash of wrong theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('pelita-theme')||'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}})()`,
+          }}
+        />
       </head>
       <body className={inter.className}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
