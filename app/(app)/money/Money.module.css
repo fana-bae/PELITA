@@ -1,38 +1,31 @@
-/* Money.module.css — Modern, clean, no neon */
-
-:root {
-  --color-income: #10B981;
-  --color-expense: #EF4444;
-}
+/* Money.module.css — Responsive, Dark-mode aware */
 
 .page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   min-height: 100%;
 }
 
 /* ── Hero Balance Card ── */
 .heroCard {
   background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
-  border-radius: 24px;
-  padding: 28px 32px;
+  border-radius: var(--radius-xl);
+  padding: 22px 20px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  box-shadow: 0 8px 32px rgba(30, 41, 59, 0.2);
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.25);
 }
 
 .heroLeft {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .heroLabel {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -41,36 +34,38 @@
 }
 
 .heroBalance {
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: 800;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit);
   margin: 0;
   line-height: 1.1;
 }
 
 .heroSub {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
   margin: 0;
 }
 
 .heroRight {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .btnIncome {
   background: rgba(16, 185, 129, 0.15);
   border: 1.5px solid rgba(16, 185, 129, 0.4);
   color: #34D399;
-  padding: 10px 20px;
-  border-radius: 12px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  flex: 1;
 }
 .btnIncome:hover {
   background: rgba(16, 185, 129, 0.25);
@@ -81,13 +76,14 @@
   background: rgba(239, 68, 68, 0.15);
   border: 1.5px solid rgba(239, 68, 68, 0.4);
   color: #FC8181;
-  padding: 10px 20px;
-  border-radius: 12px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  flex: 1;
 }
 .btnExpense:hover {
   background: rgba(239, 68, 68, 0.25);
@@ -98,115 +94,111 @@
 .summaryGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 10px;
 }
 
 .summaryCard {
   background: var(--surface);
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s, background-color var(--transition-theme), border-color var(--transition-theme);
 }
 .summaryCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+  box-shadow: var(--shadow-md);
 }
 
 .summaryTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .summaryChange {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   color: var(--dark-3);
 }
 
 .summaryIcon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.incomeIcon {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10B981;
-}
-.expenseIcon {
-  background: rgba(245, 158, 11, 0.1);
-  color: #F59E0B;
-}
+.incomeIcon { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+.expenseIcon { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
 
 .summaryVal {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 800;
   color: var(--dark);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .summaryMeta {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--dark-3);
 }
 
 /* ── Chart Section ── */
 .chartSection {
   background: var(--surface);
-  padding: 24px;
-  border-radius: 24px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
+  padding: 18px 16px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
 }
 
 .chartHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .chartTitle {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--dark);
   margin: 0;
 }
 
 .chartSub {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--dark-3);
-  margin: 4px 0 0;
+  margin: 3px 0 0;
 }
 
 .chartLegend {
   display: flex;
   align-items: center;
-  gap: 16px;
-  font-size: 0.75rem;
+  gap: 12px;
+  font-size: 0.6875rem;
   color: var(--dark-3);
   font-weight: 600;
 }
 
 .legendDot {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  margin-right: 4px;
+  margin-right: 3px;
 }
 
 .chartArea {
-  height: 200px;
+  height: 180px;
   width: 100%;
   position: relative;
 }
@@ -214,120 +206,107 @@
 /* ── Calculator Banner Button ── */
 .calcBtn {
   background: var(--surface);
-  border: 1px solid rgba(0,0,0,0.05);
-  border-radius: 20px;
-  padding: 18px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   cursor: pointer;
   text-align: left;
-  transition: all 0.2s;
-  font-size: 1.5rem;
+  transition: all 0.2s, background-color var(--transition-theme), border-color var(--transition-theme);
+  font-size: 1.375rem;
   width: 100%;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.03);
 }
 .calcBtn:hover {
-  background: var(--bg);
+  background: var(--surface-2);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-md);
 }
 
 .calcBtnTitle {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--dark);
   margin: 0;
+  line-height: 1.3;
 }
 
 .calcBtnSub {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--dark-3);
   margin: 2px 0 0;
 }
 
 .calcBtnArrow {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--dark-3);
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 /* ── History Section ── */
 .historySection {
   background: var(--surface);
-  border-radius: 24px;
-  padding: 24px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
+  border-radius: var(--radius-xl);
+  padding: 18px 16px;
+  border: 1px solid var(--border);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
 }
 
 .historyHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .txCount {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   color: var(--dark-3);
   background: var(--surface-2);
-  padding: 4px 10px;
-  border-radius: 20px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
 }
 
-.txList {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+.txList { display: flex; flex-direction: column; gap: 0; }
 
 .txItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--bg-2);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
   transition: background 0.15s;
 }
-.txItem:last-child {
-  border-bottom: none;
-}
+.txItem:last-child { border-bottom: none; }
 
-.txLeft {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+.txLeft { display: flex; align-items: center; gap: 12px; }
 
 .txIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.125rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 
-.txIconInc {
-  background: rgba(16, 185, 129, 0.1);
-}
-.txIconExp {
-  background: rgba(100, 116, 139, 0.08);
-}
+.txIconInc { background: rgba(16, 185, 129, 0.1); }
+.txIconExp { background: var(--surface-2); }
 
 .txCat {
   font-weight: 600;
   color: var(--dark);
-  font-size: 0.9375rem;
-  margin: 0 0 3px;
+  font-size: 0.875rem;
+  margin: 0 0 2px;
 }
 
 .txDate {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--dark-3);
   margin: 0;
 }
@@ -335,13 +314,13 @@
 .txRight {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
 .txAmount {
   font-weight: 700;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   margin: 0;
 }
 .inc { color: #10B981; }
@@ -350,7 +329,7 @@
 .txDelete {
   background: none;
   border: none;
-  color: #EF4444;
+  color: var(--danger);
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s;
@@ -358,45 +337,50 @@
   padding: 4px 6px;
   border-radius: 6px;
 }
-.txItem:hover .txDelete {
-  opacity: 0.6;
-}
-.txDelete:hover {
-  opacity: 1 !important;
+.txItem:hover .txDelete { opacity: 0.6; }
+.txDelete:hover { opacity: 1 !important; }
+
+/* Show delete on mobile (no hover) */
+@media (max-width: 639px) {
+  .txDelete { opacity: 0.4; }
 }
 
 .emptyState {
   text-align: center;
-  padding: 40px 0;
+  padding: 32px 0;
   color: var(--dark-3);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 
 /* ── Calculator Modal ── */
-.calcGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.calcGrid { display: flex; flex-direction: column; gap: 8px; }
 
 .calcItem {
-  background: var(--bg);
-  padding: 14px 16px;
-  border-radius: 12px;
+  background: var(--surface-2);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 4px solid transparent; /* overridden inline */
+  border-left: 4px solid transparent;
 }
 
 .calcLabel {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--dark-2);
   margin: 0;
 }
 
-.calcVal {
-  font-weight: 800;
-  font-size: 1rem;
+.calcVal { font-weight: 800; font-size: 0.9375rem; }
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .heroCard { padding: 28px 24px; flex-direction: row; align-items: center; }
+  .heroBalance { font-size: 2.5rem; }
+  .heroRight { flex-wrap: nowrap; }
+  .summaryCard { padding: 20px; }
+  .summaryVal { font-size: 1.25rem; }
+  .chartArea { height: 220px; }
+  .page { gap: 20px; }
 }
