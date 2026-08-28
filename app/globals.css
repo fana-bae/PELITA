@@ -3,7 +3,7 @@
    Modern, Soft, Elegant — Light + Dark Mode
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 
 /* ============================================================
    CSS Custom Properties — Light Mode (Default)
@@ -54,8 +54,8 @@
   --white: var(--surface);
 
   /* Typography */
-  --font-inter:  'Inter', sans-serif;
-  --font-outfit: 'Outfit', sans-serif;
+  --font-poppins:  'Inter', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 
   /* Spacing */
   --spacing-xs:  4px;
@@ -161,7 +161,7 @@ html {
 }
 
 body {
-  font-family: var(--font-inter);
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
   background-color: var(--bg);
   color: var(--dark);
   line-height: 1.6;
@@ -202,7 +202,7 @@ ul, ol {
 /* ============================================================
    Typography Utilities
    ============================================================ */
-.font-outfit { font-family: var(--font-outfit); }
+.font-poppins { font-family: var(--font-poppins); }
 
 .text-xs    { font-size: 0.75rem;   line-height: 1.4; }
 .text-sm    { font-size: 0.875rem;  line-height: 1.5; }
@@ -504,7 +504,7 @@ select.input { cursor: pointer; }
 }
 
 .modal__title {
-  font-family: var(--font-outfit);
+  font-family: var(--font-poppins);
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--dark);

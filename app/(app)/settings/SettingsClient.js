@@ -128,7 +128,7 @@ export default function SettingsClient({ user, profile, notifSettings }) {
 
   return (
     <div className={`${styles.page} page-enter`}>
-      <h1 className={`${styles.title} font-outfit`}>Pengaturan</h1>
+      <h1 className={`${styles.title} font-poppins`}>Pengaturan</h1>
 
       {/* ── Avatar + Profile Summary ── */}
       <div className={styles.profileHero}>

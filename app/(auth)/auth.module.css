@@ -20,7 +20,7 @@
   justify-content: center;
   background: linear-gradient(145deg, #f0fdf4 0%, #eff6ff 50%, #faf5ff 100%);
   padding: 20px;
-  font-family: var(--font-inter, 'Inter', sans-serif);
+  font-family: var(--font-poppins, 'Inter', sans-serif);
 }
 
 /* ── Main card ── */
@@ -150,7 +150,7 @@
   border-radius: 8px;
 }
 .overlayLogoText {
-  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
   font-size: 1.5rem;
   font-weight: 800;
   color: #fff;
@@ -158,7 +158,7 @@
 }
 
 .overlayHeading {
-  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
   font-size: 1.875rem;
   font-weight: 800;
   color: #fff;
@@ -208,7 +208,7 @@
 ───────────────────────────────────────── */
 
 .formHeading {
-  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
   font-size: 1.625rem;
   font-weight: 800;
   color: #111827;
@@ -438,7 +438,7 @@
 }
 .successIcon { font-size: 3.5rem; }
 .successTitle {
-  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
   font-size: 1.5rem;
   font-weight: 800;
   color: #111827;
@@ -565,7 +565,7 @@
     border-radius: 6px;
   }
   .mobileLogoText {
-    font-family: var(--font-outfit, 'Outfit', sans-serif);
+    font-family: var(--font-poppins, 'Poppins', sans-serif);
     font-size: 1.375rem;
     font-weight: 800;
     color: #fff;

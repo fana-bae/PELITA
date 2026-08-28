@@ -285,7 +285,7 @@ export default function TasksClient({ tasks: initialTasks, userId }) {
   return (
     <div className={`${styles.page} page-enter`}>
       <div className={styles.header}>
-        <h1 className={`${styles.title} font-outfit`}>Tasks Calendar</h1>
+        <h1 className={`${styles.title} font-poppins`}>Tasks Calendar</h1>
         <button className="btn btn--blue" onClick={() => openAddForm()}>
           + Create Task
         </button>

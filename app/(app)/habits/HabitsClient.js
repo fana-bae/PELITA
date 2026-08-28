@@ -154,7 +154,7 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
       {/* Header */}
       <div className={styles.header}>
         <div>
-          <h1 className={`${styles.title} font-outfit`}>Habit Tracker</h1>
+          <h1 className={`${styles.title} font-poppins`}>Habit Tracker</h1>
           <p className={styles.subtitle}>
             {new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}
           </p>

@@ -86,7 +86,7 @@ export default function NotesClient({ initialNotes, userId }) {
   return (
     <div className={`${styles.page} page-enter`}>
       <div className={styles.header}>
-        <h1 className={`${styles.title} font-outfit`}>My Notes</h1>
+        <h1 className={`${styles.title} font-poppins`}>My Notes</h1>
         <div className={styles.headerActions}>
           <button className="btn btn--blue" onClick={openCreateForm}>
             + Create Note

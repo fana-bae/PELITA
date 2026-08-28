@@ -50,7 +50,7 @@ export default function DashboardClient({
       <div className={styles.header}>
         <div>
           <p className={styles.greeting}>{greeting} 👋</p>
-          <h1 className={`${styles.name} font-outfit`}>
+          <h1 className={`${styles.name} font-poppins`}>
             Halo, {displayName}!
           </h1>
           <div className={styles.badgeRow}>
@@ -143,7 +143,7 @@ export default function DashboardClient({
       {/* Today's Habits (preview) */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2 className={`${styles.sectionTitle} font-outfit`}>Habit Hari Ini</h2>
+          <h2 className={`${styles.sectionTitle} font-poppins`}>Habit Hari Ini</h2>
           <Link href="/habits" className={styles.seeAll}>Lihat semua →</Link>
         </div>
 
@@ -178,7 +178,7 @@ export default function DashboardClient({
       {/* Today's Tasks */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2 className={`${styles.sectionTitle} font-outfit`}>Tugas Hari Ini</h2>
+          <h2 className={`${styles.sectionTitle} font-poppins`}>Tugas Hari Ini</h2>
           <Link href="/tasks" className={styles.seeAll}>Lihat semua →</Link>
         </div>
 

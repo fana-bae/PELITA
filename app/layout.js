@@ -1,9 +1,12 @@
-import { Inter, Outfit } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
+const poppins = Poppins({ 
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'], 
+  variable: '--font-poppins' 
+})
 
 export const metadata = {
   title: 'PELITA — Track Habits, Tasks & Money',
@@ -25,7 +28,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
+    <html lang="id" className={`${poppins.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -37,7 +40,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <ThemeProvider>
           {children}
         </ThemeProvider>
