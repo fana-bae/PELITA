@@ -1,0 +1,441 @@
+/* Habits.module.css */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.8125rem;
+  color: var(--dark-3);
+  margin: 2px 0 0;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 12px;
+  background: var(--surface);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--dark-3);
+  transition: all 0.2s;
+}
+
+.tabActive {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+}
+
+.tabActiveBad {
+  background: var(--danger-light);
+  color: var(--danger);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+}
+
+.tabBadge {
+  background: rgba(0,0,0,0.06);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.6875rem;
+}
+.tabActive .tabBadge { background: rgba(34, 197, 94, 0.15); }
+.tabActiveBad .tabBadge { background: rgba(239, 68, 68, 0.15); }
+
+/* ── Main Layout ── */
+.mainLayout {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .mainLayout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* ── Left Column: Habits ── */
+.habitsCol {
+  flex: 1;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Frequency Filters */
+.freqFilters {
+  display: flex;
+  gap: 12px;
+  border-bottom: 2px solid var(--bg-2);
+  padding-bottom: 8px;
+}
+
+.freqBtn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark-3);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+}
+
+.freqBtnActive {
+  background: var(--bg-2);
+  color: var(--dark);
+}
+
+/* Habit Table / Grid */
+.habitList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.habitTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--bg-2);
+  margin-bottom: 12px;
+}
+
+.thName {
+  flex: 1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--dark-3);
+  letter-spacing: 1px;
+}
+
+.thDays {
+  display: flex;
+  gap: 8px;
+  padding-right: 40px; /* space for delete btn */
+}
+
+.thDay {
+  width: 32px;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--dark-3);
+  text-transform: uppercase;
+}
+
+/* Table Row */
+.tableRow {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bg-2);
+  transition: background 0.2s;
+  border-radius: 8px;
+}
+.tableRow:hover {
+  background: var(--bg-2);
+}
+
+.trName {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.habitEmoji {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.habitInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.habitTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.habitDesc {
+  font-size: 0.75rem;
+  color: var(--dark-3);
+}
+
+.trDays {
+  display: flex;
+  gap: 8px;
+}
+
+.trProgress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 16px;
+}
+.progressText {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--dark-2);
+}
+
+/* Checkmarks */
+.dayCheck {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dayCheck:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--primary-glow);
+}
+
+.dayCheckDone {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dayCheckFuture {
+  opacity: 0.2;
+  cursor: not-allowed;
+  border: 2px dashed var(--border);
+}
+
+.deleteBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: var(--danger);
+  margin-left: 8px;
+}
+.tableRow:hover .deleteBtn { opacity: 0.5; }
+.deleteBtn:hover { opacity: 1 !important; background: var(--danger-light); }
+
+/* Mobile display adjustments for the grid */
+@media (max-width: 639px) {
+  .thDays { display: none; }
+  .tableRow { flex-direction: column; align-items: flex-start; gap: 12px; position: relative; padding: 16px; border: 1px solid var(--border); margin-bottom: 10px; }
+  .trDays { width: 100%; justify-content: space-between; }
+  .deleteBtn { position: absolute; top: 12px; right: 12px; opacity: 1; }
+  .dayCheck { width: 36px; height: 36px; }
+  .tableHeader { display: none; }
+}
+
+/* ── Right Column: Categories ── */
+.categoriesCol {
+  width: 100%;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 1024px) {
+  .categoriesCol { width: 300px; flex-shrink: 0; position: sticky; top: 20px; }
+}
+
+.catHeader h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0;
+}
+
+.catList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 1023px) {
+  .catList {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .catCard { min-width: 160px; }
+}
+
+.catCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.catCard:hover {
+  background: var(--bg-2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.catCardActive {
+  background: var(--primary-light) !important;
+  border-color: var(--primary) !important;
+}
+
+.catIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+}
+.catCardActive .catIcon { background: white; }
+
+.catInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.catName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.catCount {
+  font-size: 0.6875rem;
+  color: var(--dark-3);
+}
+
+.catArrow {
+  font-size: 1.25rem;
+  color: var(--dark-3);
+}
+.catCardActive .catArrow { color: var(--primary); }
+
+
+/* ── Empty State & Buttons ── */
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border);
+}
+
+.emptyIcon { font-size: 2.5rem; margin-bottom: 12px; }
+.emptyTitle { font-size: 1rem; font-weight: 600; color: var(--dark); margin-bottom: 16px; }
+
+.addBtn {
+  width: 100%;
+  padding: 14px;
+  background: var(--bg-2);
+  color: var(--dark);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border);
+  transition: all 0.2s;
+}
+.addBtn:hover {
+  background: var(--border);
+  border-color: var(--dark-3);
+}
+
+/* ── Modal Additions ── */
+.form { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.formRow { display: flex; gap: 12px; align-items: flex-end; }
+.formActions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+
+.categoryGrid, .iconGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.categoryBtn, .iconBtn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  background: var(--surface);
+  transition: all 0.2s;
+  color: var(--dark);
+}
+.categoryBtnActive, .iconBtnActive {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
