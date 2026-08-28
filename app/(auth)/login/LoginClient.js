@@ -104,7 +104,7 @@ function LoginForm() {
 
   return (
     <>
-      <h2 className={styles.formHeading}>Masuk ke Pelita</h2>
+      <h2 className={styles.formHeading}>Masuk ke PELITA</h2>
       <p className={styles.formSubtext}>Gunakan NIS dan password pondokmu</p>
 
       {error && <div className={styles.errorBanner} id="auth-error-login">{error}</div>}
@@ -346,8 +346,8 @@ function AuthClientInner() {
           <div className={styles.overlayShape3} />
 
           <div className={styles.overlayLogo}>
-            <span className={styles.overlayLogoIcon}>🕯️</span>
-            <span className={styles.overlayLogoText}>Pelita</span>
+            <img src="/logo.jpg" alt="PELITA Logo" className={styles.overlayLogoImg} />
+            <span className={styles.overlayLogoText}>PELITA</span>
           </div>
 
           {!showRegister ? (
@@ -384,8 +384,8 @@ function AuthClientInner() {
         <div className={styles.mobileHeaderShape1} />
         <div className={styles.mobileHeaderShape2} />
         <div className={styles.mobileLogo}>
-          <span className={styles.mobileLogoIcon}>🕯️</span>
-          <span className={styles.mobileLogoText}>Pelita</span>
+          <img src="/logo.jpg" alt="PELITA Logo" className={styles.mobileLogoImg} />
+          <span className={styles.mobileLogoText}>PELITA</span>
         </div>
         <p className={styles.mobileHeaderSub}>
           {showRegister ? 'Daftar dengan NIS pondokmu 🪪' : 'Selamat datang, Santri! 👋'}

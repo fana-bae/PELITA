@@ -2,8 +2,8 @@ import { Suspense } from 'react'
 import AuthClient from './LoginClient'
 
 export const metadata = {
-  title: 'Masuk — Pelita',
-  description: 'Login ke Pelita untuk mulai track habit, tugas, dan keuanganmu.',
+  title: 'Masuk — PELITA',
+  description: 'Login ke PELITA untuk mulai track habit, tugas, dan keuanganmu.',
 }
 
 // Suspense diperlukan karena AuthClient menggunakan useSearchParams()

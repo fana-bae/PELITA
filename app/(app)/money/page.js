@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getFinancialOverview, getTransactions } from '@/lib/actions/money'
 import MoneyClient from './MoneyClient'
 
-export const metadata = { title: 'Money Tracker — Pelita' }
+export const metadata = { title: 'Money Tracker — PELITA' }
 
 export default async function MoneyPage() {
   const supabase = await createClient()

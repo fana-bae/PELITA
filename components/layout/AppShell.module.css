@@ -52,9 +52,11 @@
   border-bottom: 1px solid var(--border);
 }
 
-.logoIcon {
-  font-size: 1.625rem;
-  animation: float 3s ease-in-out infinite;
+.logoImg {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 .logoText {
@@ -321,6 +323,13 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.topLogoImg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
 }
 
 .topBarRight {

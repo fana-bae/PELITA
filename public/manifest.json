@@ -1,6 +1,6 @@
 {
-  "name": "LifeTracker Pro",
-  "short_name": "LifeTracker",
+  "name": "PELITA",
+  "short_name": "PELITA",
   "description": "Track habits, tasks, and money. Compete with friends.",
   "start_url": "/dashboard",
   "display": "standalone",

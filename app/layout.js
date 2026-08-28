@@ -6,12 +6,12 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
 
 export const metadata = {
-  title: 'Pelita — Track Habits, Tasks & Money',
+  title: 'PELITA — Track Habits, Tasks & Money',
   description: 'Aplikasi all-in-one untuk tracking kebiasaan baik & buruk, tugas harian, keuangan dengan aturan 60/20/10/10, dan kompetisi leaderboard.',
   keywords: 'habit tracker, task manager, money tracker, leaderboard, gamifikasi, pelita',
-  authors: [{ name: 'Pelita' }],
+  authors: [{ name: 'PELITA' }],
   openGraph: {
-    title: 'Pelita',
+    title: 'PELITA',
     description: 'Track habits, tasks & money. Compete with friends.',
     type: 'website',
   },

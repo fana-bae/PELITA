@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import LeaderboardClient from './LeaderboardClient'
 
-export const metadata = { title: 'Leaderboard — Pelita' }
+export const metadata = { title: 'Leaderboard — PELITA' }
 
 export default async function LeaderboardPage() {
   const supabase = await createClient()

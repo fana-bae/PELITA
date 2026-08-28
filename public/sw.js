@@ -1,4 +1,4 @@
-// Pelita — Service Worker v2
+// PELITA — Service Worker v2
 // KEAMANAN: Halaman sensitif TIDAK di-cache (network-only)
 // Hanya asset statik yang boleh di-cache
 
@@ -75,12 +75,12 @@ self.addEventListener('fetch', (event) => {
         // Jika offline dan halaman sensitif tidak tersedia — tampilkan halaman offline
         return new Response(
           `<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
-          <title>Pelita — Offline</title>
+          <title>PELITA — Offline</title>
           <style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f0fdf8}
           .box{text-align:center;padding:40px}.icon{font-size:3rem}h1{color:#059669}p{color:#6b7280}</style>
           </head><body><div class="box"><div class="icon">🕯️</div>
           <h1>Kamu sedang offline</h1>
-          <p>Sambungkan internet untuk mengakses Pelita.</p></div></body></html>`,
+          <p>Sambungkan internet untuk mengakses PELITA.</p></div></body></html>`,
           { headers: { 'Content-Type': 'text/html' } }
         )
       })
@@ -133,13 +133,13 @@ self.addEventListener('push', (event) => {
     renotify: true,
     data: { url: data.url || '/dashboard' },
     actions: [
-      { action: 'open', title: 'Buka Pelita' },
+      { action: 'open', title: 'Buka PELITA' },
       { action: 'dismiss', title: 'Nanti' },
     ],
   }
 
   event.waitUntil(
-    self.registration.showNotification(data.title || 'Pelita', options)
+    self.registration.showNotification(data.title || 'PELITA', options)
   )
 })
 

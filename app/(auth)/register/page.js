@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
 
 export const metadata = {
-  title: 'Daftar — Pelita',
-  description: 'Buat akun Pelita gratis dan mulai perjalananmu.',
+  title: 'Daftar — PELITA',
+  description: 'Buat akun PELITA gratis dan mulai perjalananmu.',
 }
 
 // Register is now integrated in the login page with slide animation

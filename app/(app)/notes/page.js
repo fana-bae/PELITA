@@ -4,7 +4,7 @@ import { getNotes } from '@/lib/actions/notes'
 import NotesClient from './NotesClient'
 
 export const metadata = {
-  title: 'Catatan | Pelita',
+  title: 'Catatan | PELITA',
   description: 'Kelola ide dan catatan pribadi',
 }
 

@@ -552,7 +552,12 @@
     position: relative;
     z-index: 1;
   }
-  .mobileLogoIcon { font-size: 1.75rem; }
+  .mobileLogoImg {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+  }
   .mobileLogoText {
     font-family: var(--font-outfit, 'Outfit', sans-serif);
     font-size: 1.375rem;
