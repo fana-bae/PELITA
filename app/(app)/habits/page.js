@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getHabits, getTodayHabitLogs } from '@/lib/actions/habits'
+import { getHabits, getCurrentMonthHabitLogs } from '@/lib/actions/habits'
 import HabitsClient from './HabitsClient'
 
 export const metadata = {
@@ -13,7 +13,7 @@ export default async function HabitsPage() {
 
   const [habits, habitLogs] = await Promise.all([
     getHabits(user.id),
-    getTodayHabitLogs(user.id),
+    getCurrentMonthHabitLogs(user.id),
   ])
 
   return <HabitsClient habits={habits} habitLogs={habitLogs} userId={user.id} />

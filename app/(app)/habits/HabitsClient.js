@@ -26,15 +26,24 @@ const BAD_ICONS = ['🚭', '🚫', '❌', '🍔', '📵', '😤', '🍷', '💸'
 
 const DAYS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']
 
-// Helper to get dates for current week (Mon-Sun)
+// Helper to get dates for current week (Mon-Sun) in local timezone
+function getLocalISODate(date) {
+  const tzOffset = date.getTimezoneOffset() * 60000
+  return new Date(date.getTime() - tzOffset).toISOString().split('T')[0]
+}
+
 function getCurrentWeekDates() {
   const curr = new Date()
+  const day = curr.getDay()
+  const diffToMonday = curr.getDate() - day + (day === 0 ? -6 : 1)
+  
+  const monday = new Date(curr.setDate(diffToMonday))
   const week = []
-  // Get Monday as first day of week
-  const first = curr.getDate() - curr.getDay() + (curr.getDay() === 0 ? -6 : 1)
+  
   for (let i = 0; i < 7; i++) {
-    const day = new Date(curr.setDate(first + i))
-    week.push(day.toISOString().split('T')[0])
+    const d = new Date(monday)
+    d.setDate(monday.getDate() + i)
+    week.push(getLocalISODate(d))
   }
   return week
 }
@@ -61,7 +70,7 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
     logMap[l.habit_id][l.log_date] = l.completed
   })
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = getLocalISODate(new Date())
   const currentWeek = getCurrentWeekDates()
 
   // Filter habits
@@ -243,13 +252,16 @@ export default function HabitsClient({ habits: initialHabits, habitLogs, userId 
                         <div className={styles.trDays}>
                           {currentWeek.map(date => {
                             const isDone = logMap[habit.id]?.[date]
-                            const isFuture = new Date(date) > new Date(today)
+                            // Hanya bisa diceklist PADA HARINYA
+                            const isToday = date === today
+                            
                             return (
                               <button
                                 key={date}
-                                disabled={isFuture || isPending}
+                                disabled={isPending || !isToday}
                                 onClick={() => handleToggle(habit.id, date)}
-                                className={`${styles.dayCheck} ${isDone ? styles.dayCheckDone : ''} ${isFuture ? styles.dayCheckFuture : ''}`}
+                                className={`${styles.dayCheck} ${isDone ? styles.dayCheckDone : ''} ${!isToday ? styles.dayCheckFuture : ''}`}
+                                title={!isToday ? 'Hanya bisa diceklist hari ini' : date}
                               >
                                 {isDone ? '✓' : ''}
                               </button>
