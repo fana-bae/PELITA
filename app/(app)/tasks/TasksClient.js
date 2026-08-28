@@ -87,6 +87,14 @@ export default function TasksClient({ tasks: initialTasks, userId }) {
   }
 
   async function handleComplete(taskId) {
+    const task = tasks.find(t => t.id === taskId)
+    if (!task) return
+
+    if (task.due_date !== todayStr) {
+      alert(`Tugas ini hanya bisa dicentang pada tanggal ${task.due_date}.`)
+      return
+    }
+
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, completed: !t.completed } : t))
     startTransition(async () => {
       await completeTask(taskId)
