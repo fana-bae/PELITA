@@ -1,0 +1,521 @@
+/* 
+ * Premium Dynamic Calendar UI for Tasks
+ * 2-Column Layout: Main Calendar (Month/Week/Day) | Side Panel (Lists)
+ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (min-width: 1200px) {
+  .layout {
+    flex-direction: row;
+  }
+}
+
+/* ── Kolom Utama: Kalender (Kiri) ─────────────────────── */
+.colMain {
+  flex: 1;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.calNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navBtn {
+  background: var(--bg-2);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--dark-2);
+  transition: all 0.2s;
+}
+.navBtn:hover { background: var(--border); color: var(--dark); }
+
+.navToday {
+  background: var(--bg-2);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--dark-2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.navToday:hover { background: var(--border); color: var(--dark); }
+
+.calTitle {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--dark);
+}
+
+.calViewSwitcher {
+  display: flex;
+  background: var(--bg-2);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.viewBtn {
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--dark-2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.viewBtn.active {
+  background: var(--white);
+  color: var(--dark);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Container Kalender ──────────────────────────────── */
+.calBody {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  background: var(--bg);
+  min-height: 400px;
+  max-height: calc(100vh - 240px);
+}
+/* Menampilkan scrollbar agar user tahu bisa discroll */
+.calBody::-webkit-scrollbar {
+  width: 6px;
+}
+.calBody::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* ── Tampilan Bulan (Month View) ─────────────────────── */
+.monthGrid {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.monthHeaderRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.monthHeaderCell {
+  padding: 10px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dark-3);
+  text-transform: uppercase;
+  border-right: 1px solid var(--border);
+}
+.monthHeaderCell:last-child { border-right: none; }
+
+.monthDaysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(100px, 1fr);
+  flex: 1;
+}
+
+.monthDayCell {
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.monthDayCell:nth-child(7n) { border-right: none; }
+.monthDayCell.otherMonth { background: var(--bg-2); opacity: 0.5; }
+
+.monthDayNum {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark-2);
+  align-self: flex-end;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.monthDayToday .monthDayNum {
+  background: var(--blue);
+  color: var(--white);
+}
+
+.monthTaskList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ── Tampilan Waktu (Week / Day View) ────────────────── */
+.timeGrid {
+  display: flex;
+  min-height: 1200px; /* enough space for 24 hours */
+  position: relative;
+  background: var(--white);
+}
+
+.timeAxis {
+  width: 60px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.timeLabel {
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  padding-right: 8px;
+  font-size: 0.75rem;
+  color: var(--dark-3);
+  transform: translateY(-50%);
+}
+
+.dayColumns {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.dayColumn {
+  flex: 1;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.dayColumn:last-child { border-right: none; }
+.dayColumn.isToday { background: rgba(59, 130, 246, 0.02); }
+
+.dayHeader {
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 20;
+  padding: 12px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-right: 1px solid var(--border);
+}
+.dayHeader:last-child { border-right: none; }
+
+.dayHeaderName {
+  font-size: 0.75rem;
+  color: var(--dark-3);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dayHeaderNum {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--dark);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.isToday .dayHeaderNum {
+  background: var(--blue);
+  color: var(--white);
+}
+
+/* All-day tasks section at the top of Week/Day view */
+.allDaySection {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+}
+.allDayLabel {
+  width: 60px;
+  padding: 8px;
+  font-size: 0.7rem;
+  color: var(--dark-3);
+  text-align: right;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.allDayContent {
+  flex: 1;
+  display: flex;
+}
+.allDayCol {
+  flex: 1;
+  border-right: 1px solid var(--border);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 40px;
+}
+.allDayCol:last-child { border-right: none; }
+
+
+/* Horizontal lines for hours */
+.hourLines {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.hourLine {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  opacity: 0.5;
+}
+
+/* Task Blocks */
+.taskBlock {
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, opacity 0.2s;
+  border: 1px solid rgba(255,255,255,0.2);
+  line-height: 1.2;
+}
+
+.taskBlock:hover {
+  transform: translateY(-1px);
+  z-index: 10 !important;
+}
+
+/* Used for Time Grid (absolute positioned) */
+.taskBlockAbsolute {
+  position: absolute;
+  left: 2px;
+  right: 4px; /* leave a tiny gap on right */
+}
+
+/* Colors */
+.color-blue { background: #3B82F6; color: #FFF; }
+.color-green { background: #10B981; color: #FFF; }
+.color-yellow { background: #F59E0B; color: #78350F; }
+.color-purple { background: #8B5CF6; color: #FFF; }
+.color-red { background: #EF4444; color: #FFF; }
+
+.taskDone {
+  opacity: 0.6;
+}
+
+/* ── Kolom Samping: Side Panel (Kanan) ───────────────── */
+.colSide {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+@media (min-width: 1200px) {
+  .colSide { width: 340px; flex-shrink: 0; }
+}
+
+.sideWidget {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  max-height: 50vh;
+}
+
+.widgetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.widgetTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.widgetBadge {
+  background: var(--bg-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: var(--dark-2);
+}
+
+.widgetContent {
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+.widgetContent::-webkit-scrollbar {
+  width: 4px;
+}
+.widgetContent::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.sideTaskItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.sideTaskItem:hover {
+  background: var(--white);
+  border-color: var(--border);
+}
+
+.checkCircle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: transparent;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.checkCircleDone {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+
+.sideTaskInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sideTaskTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.3;
+}
+.sideTaskTitleDone {
+  text-decoration: line-through;
+  color: var(--dark-3);
+}
+
+.sideTaskMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: var(--dark-2);
+}
+.priorityDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--dark-3);
+  font-size: 0.875rem;
+}
+
+/* Modal Form Styles */
+.form { display: flex; flex-direction: column; gap: 16px; }
+.formRow { display: flex; gap: 12px; }
+.formActions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+
+@media (max-width: 480px) {
+  .formRow { flex-direction: column; }
+}

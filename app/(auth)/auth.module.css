@@ -1,0 +1,592 @@
+/* ============================================================
+   Pelita — Auth Page Styles
+   Split-panel slide animation + full mobile responsive
+   ============================================================ */
+
+/* Show/hide helpers */
+.desktopOnly { display: block; }
+.mobileOnly  { display: none; }
+
+@media (max-width: 720px) {
+  .desktopOnly { display: none; }
+  .mobileOnly  { display: block; }
+}
+
+/* ── Page wrapper ── */
+.authPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8fff7 0%, #e8f4ff 60%, #f5f0ff 100%);
+  padding: 20px;
+  font-family: var(--font-inter, 'Inter', sans-serif);
+}
+
+/* ── Main card ── */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  min-height: 560px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.14), 0 8px 32px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   FORM PANELS
+───────────────────────────────────────── */
+
+/* Base for both form panels */
+.formSection {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: #fff;
+  z-index: 2;
+  overflow-y: auto;
+  transition: opacity 0.3s ease 0.25s, transform 0.3s ease 0.25s;
+}
+
+/* LOGIN panel → always on the LEFT */
+.loginSection {
+  left: 0;
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+/* REGISTER panel → always on the RIGHT */
+.registerSection {
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+}
+
+/* ─────────────────────────────────────────
+   OVERLAY PANEL (the sliding colored panel)
+   Starts on RIGHT, slides to LEFT on showRegister
+───────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(160deg, #0AC682 0%, #059669 50%, #0aada0 100%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 36px;
+  overflow: hidden;
+  transition: transform 0.65s cubic-bezier(0.65, -0.4, 0.3, 1.5);
+}
+
+/* Decorative circles inside overlay */
+.overlayShape1,
+.overlayShape2,
+.overlayShape3 {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+.overlayShape1 { width: 220px; height: 220px; top: -70px; right: -70px; }
+.overlayShape2 { width: 160px; height: 160px; bottom: -50px; left: -50px; }
+.overlayShape3 { width: 80px;  height: 80px;  bottom: 100px; right: 30px; }
+
+/* ─────────────────────────────────────────
+   ACTIVE STATE: showRegister
+───────────────────────────────────────── */
+
+/* Overlay slides from right → left */
+.showRegister .overlay {
+  transform: translateX(-100%);
+}
+
+/* Login panel fades out + slight slide */
+.showRegister .loginSection {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-20px);
+}
+
+/* Register panel fades in */
+.showRegister .registerSection {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+/* ─────────────────────────────────────────
+   OVERLAY CONTENT
+───────────────────────────────────────── */
+
+.overlayLogo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+.overlayLogoIcon { font-size: 2rem; }
+.overlayLogoText {
+  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.overlayHeading {
+  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.overlayText {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.65;
+  max-width: 240px;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.overlayBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 36px;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  background: transparent;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  z-index: 1;
+}
+.overlayBtn:hover {
+  background: #fff;
+  color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* ─────────────────────────────────────────
+   FORM CONTENT STYLES
+───────────────────────────────────────── */
+
+.formHeading {
+  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.formSubtext {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Social buttons */
+.socialRow {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.socialBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.socialBtn:hover {
+  border-color: #0AC682;
+  box-shadow: 0 4px 12px rgba(10, 198, 130, 0.2);
+  transform: translateY(-2px);
+}
+
+.socialDivider {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  text-align: center;
+  margin-bottom: 18px;
+  position: relative;
+}
+.socialDivider::before,
+.socialDivider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 28%;
+  height: 1px;
+  background: #e5e7eb;
+}
+.socialDivider::before { left: 0; }
+.socialDivider::after  { right: 0; }
+
+/* Input fields */
+.inputField {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  background: #f9fafb;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  margin-bottom: 12px;
+  display: block;
+}
+.inputField::placeholder { color: #9ca3af; }
+.inputField:focus {
+  border-color: #0AC682;
+  box-shadow: 0 0 0 3px rgba(10, 198, 130, 0.12);
+  background: #fff;
+}
+
+/* Submit button */
+.submitBtn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #0AC682 0%, #059669 100%);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(10, 198, 130, 0.35);
+  margin-top: 4px;
+}
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 198, 130, 0.45);
+}
+.submitBtn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+/* Error banner */
+.errorBanner {
+  width: 100%;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.8125rem;
+  color: #dc2626;
+  font-weight: 500;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* Forgot link */
+.forgotLink {
+  font-size: 0.8125rem;
+  color: #0AC682;
+  text-decoration: none;
+  display: block;
+  text-align: right;
+  margin-bottom: 4px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.forgotLink:hover { color: #059669; text-decoration: underline; }
+
+/* ── Input with icon ──────────────────────────────────────── */
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.inputWrapper:last-child { margin-bottom: 0; }
+
+.inputIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+  line-height: 1;
+  z-index: 1;
+}
+
+.inputWithIcon {
+  padding-left: 44px !important;
+  margin-bottom: 0 !important; /* wrapper handles margin */
+}
+
+/* Input that also has a right-side toggle button */
+.inputWithToggle {
+  padding-right: 44px !important;
+}
+
+/* Eye show/hide password button */
+.eyeToggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.2s;
+  z-index: 2;
+  line-height: 0;
+}
+.eyeToggle:hover { color: #059669; }
+.eyeToggle:focus-visible {
+  outline: 2px solid #0AC682;
+  outline-offset: 1px;
+}
+
+
+/* ── Overlay NIS badge ────────────────────────────────────── */
+.overlayNisBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.5px;
+}
+
+
+/* ─────────────────────────────────────────
+   SUCCESS STATE
+───────────────────────────────────────── */
+.successContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8fff7 0%, #e8f4ff 60%, #f5f0ff 100%);
+  padding: 20px;
+}
+.successCard {
+  background: #fff;
+  border-radius: 24px;
+  padding: 56px 48px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.successIcon { font-size: 3.5rem; }
+.successTitle {
+  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+}
+.successDesc {
+  font-size: 0.9375rem;
+  color: #6b7280;
+  line-height: 1.65;
+  max-width: 320px;
+}
+.successBtn {
+  margin-top: 8px;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #0AC682, #059669);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(10, 198, 130, 0.35);
+  transition: all 0.25s;
+}
+.successBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 198, 130, 0.45);
+}
+
+/* ─────────────────────────────────────────
+   MOBILE TAB SWITCHER
+   (shown only on mobile, replaces overlay)
+───────────────────────────────────────── */
+.mobileHeader {
+  display: none;
+}
+
+.mobileTabs {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 4px;
+  gap: 4px;
+}
+.mobileTab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.mobileTabActive {
+  background: #fff;
+  color: #059669;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile form wrapper */
+.mobileFormWrapper {
+  display: none;
+}
+
+/* ─────────────────────────────────────────
+   TABLET: ≤ 720px
+───────────────────────────────────────── */
+@media (max-width: 720px) {
+  .authPage {
+    padding: 0;
+    align-items: stretch;
+    background: #fff;
+  }
+
+  /* Hide desktop split-panel elements */
+  .container {
+    display: none;
+  }
+
+  /* Show mobile layout */
+  .mobileLayout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #fff;
+  }
+
+  /* Colored header strip */
+  .mobileHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 24px 28px;
+    background: linear-gradient(160deg, #0AC682 0%, #059669 60%, #0aada0 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .mobileHeaderShape1,
+  .mobileHeaderShape2 {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    pointer-events: none;
+  }
+  .mobileHeaderShape1 { width: 180px; height: 180px; top: -60px; right: -60px; }
+  .mobileHeaderShape2 { width: 120px; height: 120px; bottom: -40px; left: -40px; }
+
+  .mobileLogo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .mobileLogoIcon { font-size: 1.75rem; }
+  .mobileLogoText {
+    font-family: var(--font-outfit, 'Outfit', sans-serif);
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: #fff;
+  }
+  .mobileHeaderSub {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.85);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Mobile form area */
+  .mobileFormWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 28px 24px 40px;
+    overflow-y: auto;
+  }
+
+  /* Mobile tab switcher */
+  .mobileTabs {
+    margin-bottom: 28px;
+  }
+  .mobileTab { font-size: 0.9375rem; }
+}
+
+/* ─────────────────────────────────────────
+   PHONE: ≤ 420px
+───────────────────────────────────────── */
+@media (max-width: 420px) {
+  .mobileHeader { padding: 28px 20px 22px; }
+  .mobileFormWrapper { padding: 24px 20px 36px; }
+}

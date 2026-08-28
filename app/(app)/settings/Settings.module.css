@@ -1,0 +1,89 @@
+.page { display: flex; flex-direction: column; gap: 24px; }
+.title { font-size: 1.75rem; font-weight: 800; color: var(--dark); }
+
+.profileCard {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary), var(--blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-primary);
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.profileName { font-size: 1.25rem; font-weight: 800; color: var(--dark); }
+.profileEmail { font-size: 0.875rem; color: var(--dark-2); margin-top: 2px; }
+
+.section {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+
+/* Notification Settings */
+.notifPermission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--bg-2);
+  padding: 14px;
+  border-radius: var(--radius-md);
+}
+.notifPermLabel { font-size: 0.875rem; font-weight: 700; color: var(--dark); }
+.notifPermDesc { font-size: 0.75rem; color: var(--dark-2); margin-top: 4px; }
+
+.notifList { display: flex; flex-direction: column; gap: 12px; }
+
+.notifItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.notifItemLabel { font-size: 0.875rem; font-weight: 700; color: var(--dark); }
+.notifItemDesc { font-size: 0.75rem; color: var(--dark-2); margin-top: 4px; }
+
+.dangerZone { border-color: var(--danger-light); }
+
+@media (max-width: 480px) {
+  .profileCard { flex-direction: column; text-align: center; }
+  .notifPermission { flex-direction: column; align-items: flex-start; }
+}

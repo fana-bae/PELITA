@@ -1,0 +1,32 @@
+{
+  "name": "LifeTracker Pro",
+  "short_name": "LifeTracker",
+  "description": "Track habits, tasks, and money. Compete with friends.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#F7FFFE",
+  "theme_color": "#0AC682",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "lifestyle", "finance"],
+  "lang": "id"
+}
