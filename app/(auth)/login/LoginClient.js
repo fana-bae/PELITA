@@ -346,7 +346,7 @@ function AuthClientInner() {
           <div className={styles.overlayShape3} />
 
           <div className={styles.overlayLogo}>
-            <img src="/logo.jpg" alt="PELITA Logo" className={styles.overlayLogoImg} />
+            <img src="/logo.png" alt="PELITA Logo" className={styles.overlayLogoImg} />
             <span className={styles.overlayLogoText}>PELITA</span>
           </div>
 
@@ -384,7 +384,7 @@ function AuthClientInner() {
         <div className={styles.mobileHeaderShape1} />
         <div className={styles.mobileHeaderShape2} />
         <div className={styles.mobileLogo}>
-          <img src="/logo.jpg" alt="PELITA Logo" className={styles.mobileLogoImg} />
+          <img src="/logo.png" alt="PELITA Logo" className={styles.mobileLogoImg} />
           <span className={styles.mobileLogoText}>PELITA</span>
         </div>
         <p className={styles.mobileHeaderSub}>

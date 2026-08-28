@@ -50,7 +50,7 @@ export default function AppShell({ user, profile, children }) {
 
           {/* Logo */}
           <div className={styles.logo}>
-            <img src="/logo.jpg" alt="PELITA Logo" className={styles.logoImg} />
+            <img src="/logo.png" alt="PELITA Logo" className={styles.logoImg} />
             <span className={styles.logoText}>PELITA</span>
           </div>
 
@@ -134,7 +134,7 @@ export default function AppShell({ user, profile, children }) {
           </button>
 
           <div className={styles.topLogo}>
-            <img src="/logo.jpg" alt="PELITA Logo" className={styles.topLogoImg} />
+            <img src="/logo.png" alt="PELITA Logo" className={styles.topLogoImg} />
             <span>PELITA</span>
           </div>
 
